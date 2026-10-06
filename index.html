@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0d10">
+  <meta name="description" content="AUREN, AI Executive Companion untuk mengatur pekerjaan, menjernihkan informasi, dan membantu mengambil keputusan.">
+  <title>AUREN — Clarity. Control. Action.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230b0d10'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Arial' font-size='42' fill='%23dfc08a'%3EA%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d10;
+      --panel: #12151a;
+      --line: #292d34;
+      --text: #f0eee9;
+      --muted: #a8adb6;
+      --gold: #dfc08a;
+      --green: #8ae0ae;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--text);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      font-size: 16px; line-height: 1.7;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; cursor: pointer; }
+    a, button { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+    h1, h2, h3, p { margin: 0; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.7rem); line-height: 1.2; letter-spacing: -.035em; }
+    h3 { font-size: 1.2rem; line-height: 1.4; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin-inline: auto; }
+    .muted { color: var(--muted); }
+    .eyebrow { color: var(--gold); font-size: .875rem; letter-spacing: .16em; text-transform: uppercase; }
+    .header { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 25px 0; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; letter-spacing: .16em; }
+    .mark { display: grid; place-items: center; width: 36px; height: 36px; border: 1px solid var(--gold); border-radius: 10px; color: var(--gold); }
+    .header-link { color: var(--muted); font-size: .875rem; }
+    .header-link:hover { color: var(--gold); }
+    .hero { display: grid; grid-template-columns: 1.25fr 1fr; align-items: center; gap: 64px; padding: 85px 0 95px; }
+    .status { display: inline-flex; align-items: center; padding: 6px 12px; border: 1px solid #284b37; border-radius: 30px; background: #102018; color: var(--green); font-size: .875rem; box-shadow: 0 0 22px #8ae0ae0a; }
+    h1 { font-size: clamp(4rem, 10vw, 7rem); line-height: 1; letter-spacing: -.065em; margin: 27px 0 14px; font-weight: 600; }
+    .tagline { color: var(--gold); font-size: clamp(1.25rem, 3vw, 1.8rem); letter-spacing: -.025em; }
+    .intro { max-width: 570px; color: var(--muted); margin-top: 22px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 30px; }
+    .btn { display: inline-flex; justify-content: center; align-items: center; min-height: 48px; padding: 11px 22px; border-radius: 9px; font-weight: 600; border: 1px solid transparent; transition: background .2s, transform .2s; }
+    .primary { background: var(--gold); color: #17130c; }
+    .primary:hover { background: #ecd2a3; transform: translateY(-2px); }
+    .secondary { border-color: var(--line); background: var(--panel); }
+    .secondary:hover { background: #1d222a; }
+    .compass { padding: 30px; border: 1px solid var(--line); border-radius: 22px; background: radial-gradient(ellipse at top, #dfc08a0c, transparent 65%), var(--panel); }
+    .avatar { display: grid; place-items: center; width: 112px; height: 112px; margin: 0 auto 24px; border: 1px solid #dfc08a70; border-radius: 50%; color: var(--gold); font-size: 3.6rem; font-weight: 300; box-shadow: 0 0 0 13px #dfc08a04, 0 0 0 27px #dfc08a03; }
+    .compass-title { text-align: center; font-size: .875rem; color: var(--muted); margin-bottom: 26px; }
+    .principle { display: flex; gap: 17px; padding: 16px 0; border-top: 1px solid var(--line); }
+    .number { color: var(--gold); font-size: .875rem; padding-top: 3px; }
+    .principle p { color: var(--muted); font-size: .875rem; margin-top: 3px; }
+    section { padding: 60px 0; border-top: 1px solid var(--line); }
+    .section-head { max-width: 680px; margin-bottom: 28px; }
+    .section-head h2 { margin-top: 10px; }
+    .section-head > p:last-child { margin-top: 15px; color: var(--muted); }
+    .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card { padding: 28px; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+    .card-label { font-size: .875rem; color: var(--muted); margin-bottom: 8px; }
+    .solution { border-color: #dfc08a55; background: linear-gradient(135deg, #dfc08a08, transparent), var(--panel); }
+    .solution h3 { color: var(--gold); }
+    ul { padding-left: 20px; margin: 20px 0 0; color: var(--muted); }
+    li { padding-left: 4px; margin-bottom: 12px; }
+    li:last-child { margin-bottom: 0; }
+    li::marker { color: var(--gold); }
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .feature-icon { display: grid; place-items: center; width: 46px; height: 46px; border-radius: 12px; background: #dfc08a0c; border: 1px solid #dfc08a30; margin-bottom: 25px; color: var(--gold); font-size: 1.25rem; }
+    .feature p { color: var(--muted); margin-top: 12px; }
+    .tool { display: inline-block; margin-top: 22px; font-size: .875rem; color: var(--gold); }
+    .simulation { display: grid; grid-template-columns: .8fr 1.2fr; gap: 28px; align-items: start; }
+    .scenario-list { display: grid; gap: 12px; margin-top: 24px; }
+    .scenario { text-align: left; padding: 16px 18px; background: var(--panel); color: var(--text); border: 1px solid var(--line); border-radius: 10px; transition: border-color .2s, background .2s; }
+    .scenario span { display: block; color: var(--muted); font-size: .875rem; margin-top: 3px; }
+    .scenario:hover, .scenario[aria-pressed="true"] { border-color: var(--gold); background: #dfc08a0a; }
+    .chat { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; background: var(--panel); }
+    .chat-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+    .demo-badge { color: var(--gold); font-size: .875rem; border: 1px solid #dfc08a40; padding: 3px 9px; border-radius: 6px; }
+    .messages { height: 385px; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 18px; }
+    .message { max-width: 94%; animation: appear .3s ease both; }
+    .message.user { align-self: flex-end; }
+    .sender { display: block; font-size: .875rem; color: var(--muted); margin-bottom: 6px; }
+    .user .sender { text-align: right; }
+    .bubble { padding: 14px 17px; border: 1px solid var(--line); border-radius: 0 12px 12px; background: #1a1e25; white-space: pre-line; overflow-wrap: anywhere; }
+    .user .bubble { color: var(--gold); background: #dfc08a0d; border-color: #dfc08a35; border-radius: 12px 0 12px 12px; }
+    .typing { display: flex; gap: 5px; align-items: center; color: var(--muted); font-size: .875rem; }
+    .typing i { width: 5px; height: 5px; background: var(--gold); border-radius: 50%; animation: pulse 1s infinite; }
+    .typing i:nth-child(2) { animation-delay: .15s; }
+    .typing i:nth-child(3) { animation-delay: .3s; }
+    .chat-note { padding: 13px 22px; color: var(--muted); font-size: .875rem; border-top: 1px solid var(--line); }
+    .footer { padding: 65px 0 26px; border-top: 1px solid var(--line); }
+    .closing { display: flex; justify-content: space-between; align-items: center; gap: 28px; padding-bottom: 50px; }
+    .closing h2 { max-width: 670px; }
+    .closing p { color: var(--muted); margin-top: 15px; }
+    .closing .btn { flex-shrink: 0; }
+    .credits { display: flex; justify-content: space-between; gap: 16px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .875rem; }
+    @keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 50% { opacity: .3; } }
+    @media (max-width: 800px) {
+      .hero { grid-template-columns: 1fr; gap: 45px; padding: 55px 0; }
+      .compass { max-width: 520px; width: 100%; }
+      .comparison, .simulation { grid-template-columns: 1fr; }
+      .features { grid-template-columns: 1fr; }
+      .feature-icon { margin-bottom: 18px; }
+      .closing { align-items: flex-start; flex-direction: column; }
+      .credits { flex-direction: column; }
+      section { padding: 45px 0; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 32px); }
+      .card { padding: 22px; }
+      .status { font-size: .8rem; }
+      .chat-head, .messages { padding: 17px; }
+      .actions .btn { width: 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="header">
+      <a class="brand" href="#home" aria-label="AUREN, halaman utama"><span class="mark" aria-hidden="true">A</span> AUREN</a>
+      <a class="header-link" href="#simulation">Experience AUREN</a>
+    </header>
+    <main>
+      <div class="hero" id="home">
+        <div>
+          <div class="status">🟢 Status: Active &amp; Ready 24/7</div>
+          <h1>AUREN</h1>
+          <p class="tagline">Clarity. Control. Action.</p>
+          <p class="intro">Asisten AI pribadi yang membantu mengatur pekerjaan, menganalisis informasi, mengambil keputusan dengan lebih jernih, dan fokus pada hal yang benar-benar penting.</p>
+          <div class="actions">
+            <a class="btn primary" href="https://wa.me/6285161917155?text=Halo%2C%20saya%20ingin%20meminta%20demo%20AUREN." target="_blank" rel="noopener noreferrer">Request A Demo</a>
+            <a class="btn secondary" href="#simulation">Coba Simulasi</a>
+          </div>
+        </div>
+        <aside class="compass" aria-label="Prinsip kerja AUREN">
+          <div class="avatar" role="img" aria-label="Avatar AUREN: monogram A">A</div>
+          <p class="compass-title">YOUR AI EXECUTIVE COMPANION</p>
+          <div class="principle"><span class="number">01</span><div><h3>Clarity</h3><p>Jernihkan informasi. Pahami konteks.</p></div></div>
+          <div class="principle"><span class="number">02</span><div><h3>Control</h3><p>Fokus pada hal yang bisa Anda kendalikan.</p></div></div>
+          <div class="principle"><span class="number">03</span><div><h3>Action</h3><p>Tentukan prioritas. Ambil langkah terarah.</p></div></div>
+        </aside>
+      </div>
+      <section aria-labelledby="problem-title">
+        <div class="section-head">
+          <p class="eyebrow">From overload to oversight</p>
+          <h2 id="problem-title">Lebih jernih berpikir.<br>Lebih terarah bertindak.</h2>
+        </div>
+        <div class="comparison">
+          <article class="card">
+            <p class="card-label">Saat semuanya meminta perhatian</p>
+            <h3>The Chaos</h3>
+            <ul>
+              <li>Informasi, tugas, dan agenda menumpuk hingga prioritas sulit ditentukan.</li>
+              <li>Keputusan dibuat terlalu cepat, dengan data terbatas, struktur yang kurang, atau emosi yang dominan.</li>
+              <li>Informasi penting tersebar di aplikasi, dokumen, email, dan kalender sehingga sulit ditemukan kembali.</li>
+            </ul>
+          </article>
+          <article class="card solution">
+            <p class="card-label">Satu pendamping untuk menata langkah</p>
+            <h3>The Solution</h3>
+            <ul>
+              <li>Menyusun briefing harian dan prioritas berdasarkan agenda serta dokumen yang tersedia.</li>
+              <li>Menganalisis pilihan, data, dan risiko agar keputusan lebih terstruktur.</li>
+              <li>Menemukan dan merangkum dokumen di Google Drive, serta membaca agenda di Google Calendar.</li>
+              <li>Menerapkan perspektif Stoic dan meminta persetujuan Anda sebelum tindakan penting.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+      <section aria-labelledby="capabilities-title">
+        <div class="section-head">
+          <p class="eyebrow">Core capabilities</p>
+          <h2 id="capabilities-title">Think clearly. Stay in control.</h2>
+          <p>Tiga kemampuan utama untuk membantu Anda berpikir, mengatur, dan mengeksekusi pekerjaan.</p>
+        </div>
+        <div class="features">
+          <article class="card feature">
+            <div class="feature-icon" aria-hidden="true">◷</div>
+            <h3>Agenda &amp; Prioritas</h3>
+            <p>Membaca dan mengatur jadwal, menyiapkan morning briefing, serta membantu menentukan apa yang perlu mendapat perhatian.</p>
+            <span class="tool">Google Calendar</span>
+          </article>
+          <article class="card feature">
+            <div class="feature-icon" aria-hidden="true">≡</div>
+            <h3>Informasi &amp; Insight</h3>
+            <p>Mencari, membaca, dan merangkum dokumen menjadi briefing atau laporan untuk mendukung analisis data dan keputusan.</p>
+            <span class="tool">Google Drive</span>
+          </article>
+          <article class="card feature">
+            <div class="feature-icon" aria-hidden="true">◇</div>
+            <h3>Keputusan &amp; Kendali</h3>
+            <p>Menimbang risiko dan pilihan dengan perspektif Stoic. Tindakan penting menunggu persetujuan Anda sebelum dijalankan.</p>
+            <span class="tool">Human-in-the-Loop</span>
+          </article>
+        </div>
+      </section>
+      <section id="simulation" aria-labelledby="simulation-title">
+        <div class="simulation">
+          <div>
+            <p class="eyebrow">Interactive simulation</p>
+            <h2 id="simulation-title" style="margin-top:10px">A little clarity,<br>one command away.</h2>
+            <p class="muted" style="margin-top:18px">Pilih skenario untuk melihat contoh cara AUREN membantu Anda.</p>
+            <div class="scenario-list" role="group" aria-label="Pilih skenario percakapan">
+              <button class="scenario" type="button" data-scenario="morning" aria-pressed="false">Morning Briefing<span>Mulai hari dengan agenda dan fokus yang jelas.</span></button>
+              <button class="scenario" type="button" data-scenario="attention" aria-pressed="false">What Requires My Attention?<span>Pilah urgensi, dampak, dan langkah berikutnya.</span></button>
+              <button class="scenario" type="button" data-scenario="risk" aria-pressed="false">Assess The Risk<span>Tinjau asumsi sebelum mengambil keputusan.</span></button>
+            </div>
+          </div>
+          <div class="chat">
+            <div class="chat-head"><strong>AUREN / Companion</strong><span class="demo-badge">Simulasi</span></div>
+            <div class="messages" id="messages" role="log" aria-label="Percakapan simulasi AUREN" aria-live="polite" aria-relevant="additions" aria-busy="false">
+              <div class="message"><span class="sender">AUREN</span><div class="bubble">Welcome. Let's find your clarity.
+Pilih salah satu skenario untuk memulai.</div></div>
+            </div>
+            <p class="chat-note">Data dan respons adalah contoh. Simulasi ini tidak mengakses akun atau menjalankan tindakan nyata.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="closing">
+        <div>
+          <p class="eyebrow" style="margin-bottom:12px">Your next move, with clarity</p>
+          <h2>Clearer Thinking.<br>Better Decisions.</h2>
+          <p>Kenali AUREN, pendamping eksekutif AI untuk pekerjaan Anda.</p>
+        </div>
+        <a class="btn primary" href="https://wa.me/6285161917155?text=Halo%2C%20saya%20ingin%20meminta%20demo%20AUREN." target="_blank" rel="noopener noreferrer">Request A Demo</a>
+      </div>
+      <div class="credits"><span>AUREN — Clarity. Control. Action.</span><span>Built with AI · AI Builder Bootcamp Showcase</span></div>
+    </footer>
+  </div>
+  <script>
+    const scenarios = {
+      morning: {
+        user: "Auren, morning briefing.",
+        reply: "Good morning. Berikut contoh briefing Anda:\n\nCLARITY\n09.00 — Review proyek.\n11.00 — Diskusi proposal.\n15.00 — Evaluasi mingguan.\n\nCONTROL\nSiapkan ringkasan proposal dan daftar keputusan sebelum diskusi pukul 11.00.\n\nACTION\nPrioritas pertama: tinjau proposal selama 30 menit. Sisihkan satu blok fokus untuk pekerjaan utama.\n\nSaya bisa menyiapkan usulan perubahan agenda. Perubahan penting menunggu persetujuan Anda."
+      },
+      attention: {
+        user: "Auren, what requires my attention?",
+        reply: "Let's focus on what matters. Dalam contoh ini:\n\n1. UTAMA — Proposal yang perlu ditinjau hari ini: dampaknya tinggi dan tenggatnya dekat.\n2. BERIKUTNYA — Ringkasan dokumen untuk rapat: siapkan poin keputusan, bukan seluruh isi.\n3. BISA MENUNGGU — Pembaruan rutin tanpa tenggat mendesak.\n\nStoic perspective: kendalikan persiapan, kualitas analisis, dan respons Anda. Respons pihak lain berada di luar kendali Anda.\n\nNext action: tinjau proposal, tulis tiga pertanyaan penting, lalu tetapkan langkah berikutnya."
+      },
+      risk: {
+        user: "Auren, assess the risk. What am I missing?",
+        reply: "Mari gunakan contoh keputusan mempercepat peluncuran proyek.\n\nCLARITY\nData yang dibutuhkan: hasil pengujian, kapasitas tim, biaya, dan kesiapan operasional. Tanpa data tersebut, tingkat risiko belum bisa disimpulkan.\n\nCONTROL\nPeriksa asumsi tenggat dan siapkan opsi peluncuran bertahap.\n\nWHAT YOU MAY BE MISSING\nBiaya perbaikan setelah rilis, ketergantungan pada pihak lain, dan beban dukungan pengguna.\n\nACTION\nLengkapi data, bandingkan pilihan, lalu pilih langkah yang risikonya dapat Anda kelola. Keputusan akhir dan tindakan penting menunggu persetujuan Anda."
+      }
+    };
+    const messages = document.getElementById("messages");
+    const buttons = document.querySelectorAll("[data-scenario]");
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let runId = 0;
+    const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
+    function addMessage(sender, content, isUser = false) {
+      const message = document.createElement("div");
+      message.className = "message" + (isUser ? " user" : "");
+      const label = document.createElement("span");
+      label.className = "sender";
+      label.textContent = sender;
+      const bubble = document.createElement("div");
+      bubble.className = "bubble";
+      bubble.textContent = content;
+      message.append(label, bubble);
+      messages.append(message);
+      messages.scrollTop = messages.scrollHeight;
+      return message;
+    }
+    buttons.forEach(button => {
+      button.addEventListener("click", async () => {
+        const currentRun = ++runId;
+        const scenario = scenarios[button.dataset.scenario];
+        buttons.forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+        messages.replaceChildren();
+        messages.setAttribute("aria-busy", "true");
+        addMessage("Anda", scenario.user, true);
+        await wait(reducedMotion.matches ? 100 : 450);
+        if (currentRun !== runId) return;
+        const typing = addMessage("AUREN", "");
+        const indicator = document.createElement("div");
+        indicator.className = "typing";
+        indicator.append(document.createTextNode("AUREN sedang mengetik "));
+        for (let i = 0; i < 3; i++) {
+          const dot = document.createElement("i");
+          dot.setAttribute("aria-hidden", "true");
+          indicator.append(dot);
+        }
+        typing.querySelector(".bubble").append(indicator);
+        messages.scrollTop = messages.scrollHeight;
+        await wait(reducedMotion.matches ? 250 : 1300);
+        if (currentRun !== runId) return;
+        typing.remove();
+        addMessage("AUREN", scenario.reply);
+        messages.setAttribute("aria-busy", "false");
+      });
+    });
+  </script>
+</body>
+</html>
